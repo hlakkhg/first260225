@@ -170,38 +170,50 @@ if (uploadArea && imageUpload) {
         }
     });
 
-    async function predict() {
-        const prediction = await model.predict(previewImage);
-        loadingSpinner.style.display = "none";
-        aiResultContainer.style.display = "block";
+const animalMapping = {
+    "강아지": { ko: "강아지", en: "Dog" },
+    "dog": { ko: "강아지", en: "Dog" },
+    "고양이": { ko: "고양이", en: "Cat" },
+    "cat": { ko: "고양이", en: "Cat" }
+};
+
+function getAnimalName(className, lang) {
+    const lowerName = className.toLowerCase().trim();
+    return animalMapping[lowerName] ? animalMapping[lowerName][lang] : className;
+}
+
+async function predict() {
+    const prediction = await model.predict(previewImage);
+    loadingSpinner.style.display = "none";
+    aiResultContainer.style.display = "block";
+    
+    prediction.sort((a, b) => b.probability - a.probability);
+    const topResult = prediction[0];
+    
+    // 동물 이름 번역 대응
+    const translatedName = getAnimalName(topResult.className, currentLang);
+    aiResultTitle.textContent = currentLang === "ko" ? `당신은 ${translatedName}상 입니다!` : `You are a ${translatedName} face!`;
+    
+    labelContainer.innerHTML = "";
+    for (let i = 0; i < maxPredictions; i++) {
+        const classPrediction = prediction[i];
+        const percentage = (classPrediction.probability * 100).toFixed(0);
+        const className = getAnimalName(classPrediction.className, currentLang);
         
-        prediction.sort((a, b) => b.probability - a.probability);
-        const topResult = prediction[0];
-        
-        // 동물 이름 번역 대응
-        const animalName = currentLang === "ko" ? topResult.className : (topResult.className === "강아지" ? "Dog" : "Cat");
-        aiResultTitle.textContent = currentLang === "ko" ? `당신은 ${animalName}상 입니다!` : `You are a ${animalName} face!`;
-        
-        labelContainer.innerHTML = "";
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction = prediction[i];
-            const percentage = (classPrediction.probability * 100).toFixed(0);
-            const className = currentLang === "ko" ? classPrediction.className : (classPrediction.className === "강아지" ? "Dog" : "Cat");
-            
-            const barWrapper = document.createElement("div");
-            barWrapper.className = "result-bar-wrapper";
-            barWrapper.innerHTML = `
-                <div class="bar-label">
-                    <span>${className}</span>
-                    <span>${percentage}%</span>
-                </div>
-                <div class="bar-container">
-                    <div class="bar-fill" style="width: ${percentage}%"></div>
-                </div>
-            `;
-            labelContainer.appendChild(barWrapper);
-        }
+        const barWrapper = document.createElement("div");
+        barWrapper.className = "result-bar-wrapper";
+        barWrapper.innerHTML = `
+            <div class="bar-label">
+                <span>${className}</span>
+                <span>${percentage}%</span>
+            </div>
+            <div class="bar-container">
+                <div class="bar-fill" style="width: ${percentage}%"></div>
+            </div>
+        `;
+        labelContainer.appendChild(barWrapper);
     }
+}
 
     retryButton.addEventListener("click", () => {
         imageUpload.value = "";
