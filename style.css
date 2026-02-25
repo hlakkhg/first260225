@@ -1,3 +1,20 @@
+:root {
+    --bg-color: #f0f2f5;
+    --container-bg: #ffffff;
+    --text-color: #333333;
+    --button-bg: #ff6f61;
+    --button-hover: #e65a50;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --container-bg: #2d2d2d;
+    --text-color: #f0f2f5;
+    --button-bg: #ff8a80;
+    --button-hover: #ffab91;
+    --shadow-color: rgba(0, 0, 0, 0.5);
+}
 
 body {
     font-family: 'Pretendard', sans-serif;
@@ -5,25 +22,50 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f2f5;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     margin: 0;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
     text-align: center;
-    background-color: #fff;
+    background-color: var(--container-bg);
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 20px var(--shadow-color);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    position: relative;
+}
+
+.theme-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+#theme-button {
+    background: none;
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 5px 10px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s;
+}
+
+#theme-button:hover {
+    background-color: var(--text-color);
+    color: var(--container-bg);
 }
 
 h1 {
-    color: #333;
     margin-bottom: 30px;
 }
 
 #draw-button {
-    background-color: #ff6f61;
+    background-color: var(--button-bg);
     color: white;
     border: none;
     padding: 15px 30px;
@@ -34,14 +76,13 @@ h1 {
 }
 
 #draw-button:hover {
-    background-color: #e65a50;
+    background-color: var(--button-hover);
     transform: scale(1.05);
 }
 
 #result {
     margin-top: 30px;
     font-size: 24px;
-    color: #333;
     font-weight: bold;
     min-height: 30px;
 }
