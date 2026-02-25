@@ -86,3 +86,51 @@ h1 {
     font-weight: bold;
     min-height: 30px;
 }
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: var(--text-color);
+    opacity: 0.1;
+    margin: 40px 0;
+}
+
+.contact-section h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--shadow-color);
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: none;
+}
+
+.submit-button {
+    background-color: var(--text-color);
+    color: var(--container-bg);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.submit-button:hover {
+    opacity: 0.8;
+}
