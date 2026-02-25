@@ -8,36 +8,35 @@
 </head>
 <body>
     <div class="container">
-        <div class="theme-toggle">
+        <div class="header-controls">
+            <button id="lang-button">English</button>
             <button id="theme-button">다크 모드</button>
         </div>
 
         <header>
-            <h1>AI & Fun 서비스</h1>
-            <p class="subtitle">다양한 AI 서비스와 추천 기능을 즐겨보세요!</p>
+            <h1 data-i18n="main-title">AI & Fun 서비스</h1>
+            <p class="subtitle" data-i18n="main-subtitle">다양한 AI 서비스와 추천 기능을 즐겨보세요!</p>
         </header>
 
         <div class="main-content-grid">
-            <!-- 메뉴 추천 섹션 -->
             <section class="card-section menu-section">
                 <div>
-                    <h2>오늘 저녁 뭐 먹지?</h2>
-                    <p class="subtitle">결정 장애를 위한 무작위 메뉴 추첨기</p>
+                    <h2 data-i18n="menu-title">오늘 저녁 뭐 먹지?</h2>
+                    <p class="subtitle" data-i18n="menu-subtitle">결정 장애를 위한 무작위 메뉴 추첨기</p>
                 </div>
                 <div>
-                    <button id="draw-button">메뉴 추첨하기</button>
+                    <button id="draw-button" data-i18n="menu-button">메뉴 추첨하기</button>
                     <p id="result"></p>
                 </div>
             </section>
 
-            <!-- 동물상 테스트 섹션 -->
             <section class="card-section ai-nav-section">
                 <div>
-                    <h2>AI 동물상 테스트</h2>
-                    <p class="subtitle">나의 얼굴은 강아지상? 고양이상?</p>
+                    <h2 data-i18n="ai-title">AI 동물상 테스트</h2>
+                    <p class="subtitle" data-i18n="ai-subtitle">나의 얼굴은 강아지상? 고양이상?</p>
                 </div>
                 <div>
-                    <a href="animal-test.html" class="nav-button">테스트 하러가기</a>
+                    <a href="animal-test.html" class="nav-button" data-i18n="ai-button">테스트 하러가기</a>
                 </div>
             </section>
         </div>
@@ -45,15 +44,16 @@
         <hr class="divider">
 
         <div class="contact-section">
-            <h2>제휴 문의</h2>
+            <h2 data-i18n="contact-title">제휴 문의</h2>
             <form action="https://formspree.io/f/mykdlnbd" method="POST">
                 <div class="form-group">
-                    <input type="email" name="email" placeholder="이메일 주소" required>
+                    <input type="email" name="email" placeholder="이메일 주소" data-i18n-placeholder="contact-email" required>
                 </div>
                 <div class="form-group">
-                    <textarea name="message" placeholder="문의 내용을 입력해주세요" required></textarea>
+                    <textarea name="message" placeholder="문의 내용을 입력해주세요" data-i18n-placeholder="contact-msg" required></textarea>
                 </div>
-                <button type="submit" class="submit-button">문의 보내기</button>
+                <button type="submit" class="submit-button" data-i18n="contact-button">문의 보내기</button>
+
             </form>
         </div>
     </div>

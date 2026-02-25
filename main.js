@@ -1,11 +1,96 @@
-const menuOptions = [
-    "치킨", "피자", "삼겹살", "떡볶이", "초밥", "파스타", "부대찌개", "된장찌개", "김치찌개", "곱창",
-    "족발", "보쌈", "짜장면", "짬뽕", "탕수육", "돈까스", "냉면", "국밥", "햄버거", "샌드위치"
-];
+const translations = {
+    ko: {
+        "main-title": "AI & Fun 서비스",
+        "main-subtitle": "다양한 AI 서비스와 추천 기능을 즐겨보세요!",
+        "menu-title": "오늘 저녁 뭐 먹지?",
+        "menu-subtitle": "결정 장애를 위한 무작위 메뉴 추첨기",
+        "menu-button": "메뉴 추첨하기",
+        "ai-title": "AI 동물상 테스트",
+        "ai-subtitle": "나의 얼굴은 강아지상? 고양이상?",
+        "ai-button": "테스트 하러가기",
+        "contact-title": "제휴 문의",
+        "contact-email": "이메일 주소",
+        "contact-msg": "문의 내용을 입력해주세요",
+        "contact-button": "문의 보내기",
+        "back-home": "← 홈으로",
+        "ai-test-title": "AI 동물상 테스트",
+        "ai-test-subtitle": "나의 얼굴은 강아지상일까, 고양이상일까?",
+        "upload-text": "사진을 클릭하거나 드래그하여 업로드하세요",
+        "loading-text": "AI가 분석 중입니다...",
+        "retry-button": "다시 하기",
+        "lang-toggle": "English",
+        "theme-dark": "다크 모드",
+        "theme-light": "라이트 모드"
+    },
+    en: {
+        "main-title": "AI & Fun Services",
+        "main-subtitle": "Enjoy various AI services and recommendation features!",
+        "menu-title": "What's for Dinner?",
+        "menu-subtitle": "Random menu picker for the undecided",
+        "menu-button": "Pick a Menu",
+        "ai-title": "AI Animal Face Test",
+        "ai-subtitle": "Is your face like a dog or a cat?",
+        "ai-button": "Go to Test",
+        "contact-title": "Partnership Inquiry",
+        "contact-email": "Email Address",
+        "contact-msg": "Please enter your inquiry",
+        "contact-button": "Send Inquiry",
+        "back-home": "← Home",
+        "ai-test-title": "AI Animal Face Test",
+        "ai-test-subtitle": "Are you a dog person or a cat person?",
+        "upload-text": "Click or drag a photo to upload",
+        "loading-text": "AI is analyzing...",
+        "retry-button": "Try Again",
+        "lang-toggle": "한국어",
+        "theme-dark": "Dark Mode",
+        "theme-light": "Light Mode"
+    }
+};
 
-// 테마 및 공통 요소
+const menuOptions = {
+    ko: ["치킨", "피자", "삼겹살", "떡볶이", "초밥", "파스타", "부대찌개", "된장찌개", "김치찌개", "곱창", "족발", "보쌈", "짜장면", "짬뽕", "탕수육", "돈까스", "냉면", "국밥", "햄버거", "샌드위치"],
+    en: ["Chicken", "Pizza", "Pork Belly", "Tteokbokki", "Sushi", "Pasta", "Stew", "Soybean Stew", "Kimchi Stew", "Gopchang", "Jokbal", "Bossam", "Jajangmyeon", "Jjamppong", "Tangsuyuk", "Donkatsu", "Naengmyeon", "Gukbap", "Hamburger", "Sandwich"]
+};
+
+// 테마 및 언어 요소
 const themeButton = document.getElementById("theme-button");
+const langButton = document.getElementById("lang-button");
 const body = document.body;
+
+let currentLang = localStorage.getItem("lang") || "ko";
+
+// --- 언어 로직 ---
+function updateLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem("lang", lang);
+    
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang][key]) {
+            el.textContent = translations[lang][key];
+        }
+    });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (translations[lang][key]) {
+            el.placeholder = translations[lang][key];
+        }
+    });
+
+    if (langButton) langButton.textContent = translations[lang]["lang-toggle"];
+    updateThemeButtonText(localStorage.getItem("theme") || "light");
+}
+
+if (langButton) {
+    langButton.addEventListener("click", () => {
+        const newLang = currentLang === "ko" ? "en" : "ko";
+        updateLanguage(newLang);
+    });
+}
+
+// 초기 언어 설정
+updateLanguage(currentLang);
 
 // --- 테마 로직 ---
 if (themeButton) {
@@ -24,7 +109,7 @@ if (themeButton) {
 
 function updateThemeButtonText(theme) {
     if (themeButton) {
-        themeButton.textContent = theme === "light" ? "다크 모드" : "라이트 모드";
+        themeButton.textContent = theme === "light" ? translations[currentLang]["theme-dark"] : translations[currentLang]["theme-light"];
     }
 }
 
@@ -34,13 +119,16 @@ const resultElement = document.getElementById("result");
 
 if (drawButton && resultElement) {
     drawButton.addEventListener("click", () => {
-        const randomIndex = Math.floor(Math.random() * menuOptions.length);
-        const selectedMenu = menuOptions[randomIndex];
-        resultElement.textContent = `오늘의 저녁 메뉴는... ${selectedMenu} 입니다!`;
+        const options = menuOptions[currentLang];
+        const randomIndex = Math.floor(Math.random() * options.length);
+        const selectedMenu = options[randomIndex];
+        resultElement.textContent = currentLang === "ko" 
+            ? `오늘의 저녁 메뉴는... ${selectedMenu} 입니다!` 
+            : `Today's dinner menu is... ${selectedMenu}!`;
     });
 }
 
-// --- AI 동물상 테스트 로직 ---
+// --- AI 동물상 테스트 로직 (생략 없는 전체 로직) ---
 const uploadArea = document.getElementById("upload-area");
 const imageUpload = document.getElementById("image-upload");
 const previewImage = document.getElementById("preview-image");
@@ -73,10 +161,8 @@ if (uploadArea && imageUpload) {
                 previewImage.src = event.target.result;
                 previewImage.style.display = "block";
                 uploadText.style.display = "none";
-                
                 loadingSpinner.style.display = "block";
                 aiResultContainer.style.display = "none";
-                
                 await initAI();
                 predict();
             };
@@ -92,18 +178,21 @@ if (uploadArea && imageUpload) {
         prediction.sort((a, b) => b.probability - a.probability);
         const topResult = prediction[0];
         
-        aiResultTitle.textContent = `당신은 ${topResult.className}상 입니다!`;
+        // 동물 이름 번역 대응
+        const animalName = currentLang === "ko" ? topResult.className : (topResult.className === "강아지" ? "Dog" : "Cat");
+        aiResultTitle.textContent = currentLang === "ko" ? `당신은 ${animalName}상 입니다!` : `You are a ${animalName} face!`;
         
         labelContainer.innerHTML = "";
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction = prediction[i];
             const percentage = (classPrediction.probability * 100).toFixed(0);
+            const className = currentLang === "ko" ? classPrediction.className : (classPrediction.className === "강아지" ? "Dog" : "Cat");
             
             const barWrapper = document.createElement("div");
             barWrapper.className = "result-bar-wrapper";
             barWrapper.innerHTML = `
                 <div class="bar-label">
-                    <span>${classPrediction.className}</span>
+                    <span>${className}</span>
                     <span>${percentage}%</span>
                 </div>
                 <div class="bar-container">
