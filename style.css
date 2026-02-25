@@ -2,8 +2,9 @@
     --bg-color: #f0f2f5;
     --container-bg: #ffffff;
     --text-color: #333333;
-    --button-bg: #ff6f61;
-    --button-hover: #e65a50;
+    --button-bg: #ffd43b; /* 밝은 노란색 */
+    --button-hover: #fab005; /* 진한 노란색 */
+    --button-text: #333333;
     --shadow-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -11,8 +12,9 @@
     --bg-color: #1a1a1a;
     --container-bg: #2d2d2d;
     --text-color: #f0f2f5;
-    --button-bg: #ff8a80;
-    --button-hover: #ffab91;
+    --button-bg: #fcc419;
+    --button-hover: #f59f00;
+    --button-text: #1a1a1a;
     --shadow-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -21,7 +23,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -36,6 +38,8 @@ body {
     box-shadow: 0 10px 20px var(--shadow-color);
     transition: background-color 0.3s, box-shadow 0.3s;
     position: relative;
+    max-width: 900px;
+    width: 95%;
 }
 
 .theme-toggle {
@@ -61,49 +65,59 @@ body {
 }
 
 h1 {
-    margin-bottom: 30px;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-#draw-button {
+/* 가로 배치 레이아웃 */
+.main-content-grid {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin: 40px 0;
+    flex-wrap: wrap;
+}
+
+.card-section {
+    flex: 1;
+    min-width: 300px;
+    padding: 30px;
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s;
+}
+
+.card-section:hover {
+    transform: translateY(-5px);
+}
+
+.nav-button, #draw-button, .submit-button, #retry-button {
     background-color: var(--button-bg);
-    color: white;
+    color: var(--button-text);
     border: none;
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: bold;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-block;
 }
 
-#draw-button:hover {
+.nav-button:hover, #draw-button:hover, .submit-button:hover, #retry-button:hover {
     background-color: var(--button-hover);
     transform: scale(1.05);
 }
 
 #result {
-    margin-top: 30px;
-    font-size: 24px;
-    font-weight: bold;
-    min-height: 30px;
-}
-
-.nav-button {
-    display: inline-block;
-    background-color: var(--button-bg);
-    color: white;
-    padding: 15px 30px;
-    border-radius: 8px;
-    text-decoration: none;
+    margin-top: 20px;
     font-size: 18px;
     font-weight: bold;
-    transition: all 0.3s;
-    margin-top: 10px;
-}
-
-.nav-button:hover {
-    background-color: var(--button-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px var(--shadow-color);
+    min-height: 24px;
 }
 
 .nav-header {
@@ -123,14 +137,10 @@ h1 {
     opacity: 1;
 }
 
-.main-nav-section {
-    padding: 20px 0;
-}
-
 .subtitle {
-    color: var(--text-color);
+    font-size: 14px;
     opacity: 0.7;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .upload-container {
@@ -143,41 +153,10 @@ h1 {
     margin-bottom: 20px;
 }
 
-.upload-container:hover {
-    background-color: var(--shadow-color);
-}
-
-.upload-box p {
-    margin: 0;
-    font-size: 16px;
-}
-
 #loading-spinner {
     margin: 20px 0;
     font-weight: bold;
-    color: var(--button-bg);
-}
-
-#ai-result-container {
-    margin-top: 30px;
-}
-
-#ai-result-title {
-    font-size: 28px;
-    margin-bottom: 20px;
-    color: var(--button-bg);
-}
-
-.result-bar-wrapper {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.bar-label {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
-    font-weight: bold;
+    color: var(--button-hover);
 }
 
 .bar-container {
@@ -194,16 +173,6 @@ h1 {
     transition: width 0.5s ease-out;
 }
 
-#retry-button {
-    margin-top: 20px;
-    background-color: var(--text-color);
-    color: var(--container-bg);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
 .divider {
     border: 0;
     height: 1px;
@@ -212,9 +181,9 @@ h1 {
     margin: 40px 0;
 }
 
-.contact-section h2 {
-    font-size: 20px;
-    margin-bottom: 20px;
+.contact-section {
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .form-group {
@@ -234,20 +203,6 @@ h1 {
 }
 
 .form-group textarea {
-    height: 100px;
+    height: 80px;
     resize: none;
-}
-
-.submit-button {
-    background-color: var(--text-color);
-    color: var(--container-bg);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: opacity 0.3s;
-}
-
-.submit-button:hover {
-    opacity: 0.8;
 }
