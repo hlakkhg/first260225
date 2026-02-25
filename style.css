@@ -87,8 +87,44 @@ h1 {
     min-height: 30px;
 }
 
-.ai-section {
-    margin-bottom: 40px;
+.nav-button {
+    display: inline-block;
+    background-color: var(--button-bg);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.nav-button:hover {
+    background-color: var(--button-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+
+.nav-header {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 14px;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.back-link:hover {
+    opacity: 1;
+}
+
+.main-nav-section {
+    padding: 20px 0;
 }
 
 .subtitle {

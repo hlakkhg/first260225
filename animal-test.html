@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 동물상 테스트 - 어떤 동물과 닮았을까?</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="theme-toggle">
+            <button id="theme-button">다크 모드</button>
+        </div>
+
+        <section class="ai-section">
+            <div class="nav-header">
+                <a href="index.html" class="back-link">← 홈으로</a>
+            </div>
+            <h1>AI 동물상 테스트</h1>
+            <p class="subtitle">나의 얼굴은 강아지상일까, 고양이상일까?</p>
+            
+            <div class="upload-container" id="upload-area">
+                <input type="file" id="image-upload" accept="image/*" hidden>
+                <div class="upload-box">
+                    <p id="upload-text">사진을 클릭하거나 드래그하여 업로드하세요</p>
+                    <img id="preview-image" style="display: none; max-width: 100%; border-radius: 10px;">
+                </div>
+            </div>
+
+            <div id="loading-spinner" style="display: none;">AI가 분석 중입니다...</div>
+            <div id="ai-result-container" style="display: none;">
+                <h2 id="ai-result-title"></h2>
+                <div id="label-container"></div>
+                <button id="retry-button">다시 하기</button>
+            </div>
+        </section>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
